@@ -1,0 +1,26 @@
+@startuml
+actor Observer
+entity "intervalos$: Observable" as intervalos
+entity "subject$: Subject" as subject
+entity "subs1: Subscription" as subs1
+entity "subs2: Subscription" as subs2
+
+Observer -> intervalos: subscribe(subject$)
+intervalos -> subject: next(Math.random()) \n(repetidamente cada 1 segundo)
+
+create subs1
+subject -> subs1: subscribe(rnd => console.log('subs1', rnd))
+create subs2
+subject -> subs2: subscribe(rnd => console.log('subs2', rnd))
+
+activate subs1
+activate subs2
+
+... transcurridos 3.5 segundos ...
+
+Observer -> subject: next(10)
+Observer -> subject: complete()
+
+deactivate subs1
+deactivate subs2
+@enduml
