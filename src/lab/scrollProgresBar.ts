@@ -1,0 +1,89 @@
+import { from, fromEvent, range } from "rxjs";
+import { filter, map, mapTo, pluck, tap } from 'rxjs/operators'
+
+
+const texto = document.createElement('div');
+texto.innerHTML =`
+Lorem ipsum dolor sit amet consectetur adipiscing elit dictumst magna, vel aenean blandit etiam in urna vulputate lobortis, integer aptent luctus cras cubilia convallis ut justo. Accumsan laoreet vulputate metus cum sociis fames nisl placerat, pretium donec montes dui molestie hac leo, tortor lectus ut pellentesque nibh et habitant. At donec tristique natoque consequat class ornare scelerisque fusce luctus mi convallis, risus integer rutrum sociosqu senectus mattis torquent sem molestie augue, netus morbi velit montes ut auctor vivamus euismod egestas ullamcorper. Magnis donec magna penatibus scelerisque feugiat duis non torquent, dictumst cum class proin turpis inceptos mattis, ultricies posuere ullamcorper tristique ultrices diam mi.
+<br/><br/>
+Ultrices proin pretium odio mus viverra etiam, luctus diam in non hac mauris, tellus dis ullamcorper tempus malesuada. Elementum id aenean nisi consequat dui tristique condimentum vel commodo, cum magnis ridiculus nostra vulputate a curabitur mauris sagittis pellentesque, massa cubilia nibh interdum tellus enim metus eleifend. Dictum integer ullamcorper feugiat imperdiet ornare vestibulum venenatis elementum ante taciti lacinia, suscipit sem iaculis consequat ridiculus est blandit nullam condimentum egestas.
+<br/><br/>
+Egestas odio nisl eget penatibus metus sem netus interdum fusce massa aptent, ante faucibus arcu suspendisse erat proin duis urna fringilla varius ullamcorper, curae aliquet eros auctor imperdiet parturient nisi sed vivamus id. Magnis nibh velit tempor vel eros leo, lobortis proin senectus dictumst urna, ad aliquam tellus dapibus a. Blandit vivamus natoque nullam lectus commodo urna ac quam ultricies, erat hendrerit ante vestibulum est bibendum praesent nunc sociis, vel et tellus penatibus facilisis integer neque turpis.
+<br/><br/>
+Cubilia potenti primis maecenas ullamcorper convallis habitasse parturient dignissim diam, luctus sodales hac enim feugiat himenaeos pulvinar rhoncus, commodo morbi cum tellus augue torquent urna aptent. Risus condimentum commodo nisl aliquet posuere dictum viverra pellentesque magna vulputate sodales aliquam est vivamus, mollis iaculis placerat id praesent sociosqu sapien eget montes consequat sed nullam maecenas. Hac interdum viverra dapibus suscipit odio pharetra sed, sollicitudin euismod arcu penatibus est integer primis sapien, proin ligula congue non ullamcorper curabitur. Per dis etiam sodales nulla pellentesque auctor morbi blandit elementum aliquam, tempus dictumst sociosqu dictum vestibulum eros bibendum nam quis, platea ante mauris nec fringilla nostra varius cursus semper.
+<br/><br/>
+Nunc dictumst fames curae viverra magna primis, ridiculus pretium vivamus montes vehicula urna facilisi, curabitur nibh euismod facilisis purus. Quam cubilia vitae parturient mauris feugiat magnis fermentum ad est, condimentum justo odio vivamus lobortis blandit nisl fringilla porttitor, donec netus purus posuere enim sollicitudin viverra suspendisse. Est fusce rutrum at parturient facilisi dignissim eget netus, egestas nisi senectus imperdiet suspendisse volutpat consequat euismod commodo, mauris luctus fringilla curabitur eros rhoncus orci. Convallis libero luctus cras auctor erat cursus laoreet commodo platea, integer dictumst tristique sed sociosqu risus eleifend id egestas, nisl aenean congue metus felis malesuada vivamus arcu.
+Lorem ipsum dolor sit amet consectetur adipiscing elit dictumst magna, vel aenean blandit etiam in urna vulputate lobortis, integer aptent luctus cras cubilia convallis ut justo. Accumsan laoreet vulputate metus cum sociis fames nisl placerat, pretium donec montes dui molestie hac leo, tortor lectus ut pellentesque nibh et habitant. At donec tristique natoque consequat class ornare scelerisque fusce luctus mi convallis, risus integer rutrum sociosqu senectus mattis torquent sem molestie augue, netus morbi velit montes ut auctor vivamus euismod egestas ullamcorper. Magnis donec magna penatibus scelerisque feugiat duis non torquent, dictumst cum class proin turpis inceptos mattis, ultricies posuere ullamcorper tristique ultrices diam mi.
+<br/><br/>
+Ultrices proin pretium odio mus viverra etiam, luctus diam in non hac mauris, tellus dis ullamcorper tempus malesuada. Elementum id aenean nisi consequat dui tristique condimentum vel commodo, cum magnis ridiculus nostra vulputate a curabitur mauris sagittis pellentesque, massa cubilia nibh interdum tellus enim metus eleifend. Dictum integer ullamcorper feugiat imperdiet ornare vestibulum venenatis elementum ante taciti lacinia, suscipit sem iaculis consequat ridiculus est blandit nullam condimentum egestas.
+<br/><br/>
+Egestas odio nisl eget penatibus metus sem netus interdum fusce massa aptent, ante faucibus arcu suspendisse erat proin duis urna fringilla varius ullamcorper, curae aliquet eros auctor imperdiet parturient nisi sed vivamus id. Magnis nibh velit tempor vel eros leo, lobortis proin senectus dictumst urna, ad aliquam tellus dapibus a. Blandit vivamus natoque nullam lectus commodo urna ac quam ultricies, erat hendrerit ante vestibulum est bibendum praesent nunc sociis, vel et tellus penatibus facilisis integer neque turpis.
+<br/><br/>
+Cubilia potenti primis maecenas ullamcorper convallis habitasse parturient dignissim diam, luctus sodales hac enim feugiat himenaeos pulvinar rhoncus, commodo morbi cum tellus augue torquent urna aptent. Risus condimentum commodo nisl aliquet posuere dictum viverra pellentesque magna vulputate sodales aliquam est vivamus, mollis iaculis placerat id praesent sociosqu sapien eget montes consequat sed nullam maecenas. Hac interdum viverra dapibus suscipit odio pharetra sed, sollicitudin euismod arcu penatibus est integer primis sapien, proin ligula congue non ullamcorper curabitur. Per dis etiam sodales nulla pellentesque auctor morbi blandit elementum aliquam, tempus dictumst sociosqu dictum vestibulum eros bibendum nam quis, platea ante mauris nec fringilla nostra varius cursus semper.
+<br/><br/>
+Nunc dictumst fames curae viverra magna primis, ridiculus pretium vivamus montes vehicula urna facilisi, curabitur nibh euismod facilisis purus. Quam cubilia vitae parturient mauris feugiat magnis fermentum ad est, condimentum justo odio vivamus lobortis blandit nisl fringilla porttitor, donec netus purus posuere enim sollicitudin viverra suspendisse. Est fusce rutrum at parturient facilisi dignissim eget netus, egestas nisi senectus imperdiet suspendisse volutpat consequat euismod commodo, mauris luctus fringilla curabitur eros rhoncus orci. Convallis libero luctus cras auctor erat cursus laoreet commodo platea, integer dictumst tristique sed sociosqu risus eleifend id egestas, nisl aenean congue metus felis malesuada vivamus arcu.
+Lorem ipsum dolor sit amet consectetur adipiscing elit dictumst magna, vel aenean blandit etiam in urna vulputate lobortis, integer aptent luctus cras cubilia convallis ut justo. Accumsan laoreet vulputate metus cum sociis fames nisl placerat, pretium donec montes dui molestie hac leo, tortor lectus ut pellentesque nibh et habitant. At donec tristique natoque consequat class ornare scelerisque fusce luctus mi convallis, risus integer rutrum sociosqu senectus mattis torquent sem molestie augue, netus morbi velit montes ut auctor vivamus euismod egestas ullamcorper. Magnis donec magna penatibus scelerisque feugiat duis non torquent, dictumst cum class proin turpis inceptos mattis, ultricies posuere ullamcorper tristique ultrices diam mi.
+<br/><br/>
+Ultrices proin pretium odio mus viverra etiam, luctus diam in non hac mauris, tellus dis ullamcorper tempus malesuada. Elementum id aenean nisi consequat dui tristique condimentum vel commodo, cum magnis ridiculus nostra vulputate a curabitur mauris sagittis pellentesque, massa cubilia nibh interdum tellus enim metus eleifend. Dictum integer ullamcorper feugiat imperdiet ornare vestibulum venenatis elementum ante taciti lacinia, suscipit sem iaculis consequat ridiculus est blandit nullam condimentum egestas.
+<br/><br/>
+Egestas odio nisl eget penatibus metus sem netus interdum fusce massa aptent, ante faucibus arcu suspendisse erat proin duis urna fringilla varius ullamcorper, curae aliquet eros auctor imperdiet parturient nisi sed vivamus id. Magnis nibh velit tempor vel eros leo, lobortis proin senectus dictumst urna, ad aliquam tellus dapibus a. Blandit vivamus natoque nullam lectus commodo urna ac quam ultricies, erat hendrerit ante vestibulum est bibendum praesent nunc sociis, vel et tellus penatibus facilisis integer neque turpis.
+<br/><br/>
+Cubilia potenti primis maecenas ullamcorper convallis habitasse parturient dignissim diam, luctus sodales hac enim feugiat himenaeos pulvinar rhoncus, commodo morbi cum tellus augue torquent urna aptent. Risus condimentum commodo nisl aliquet posuere dictum viverra pellentesque magna vulputate sodales aliquam est vivamus, mollis iaculis placerat id praesent sociosqu sapien eget montes consequat sed nullam maecenas. Hac interdum viverra dapibus suscipit odio pharetra sed, sollicitudin euismod arcu penatibus est integer primis sapien, proin ligula congue non ullamcorper curabitur. Per dis etiam sodales nulla pellentesque auctor morbi blandit elementum aliquam, tempus dictumst sociosqu dictum vestibulum eros bibendum nam quis, platea ante mauris nec fringilla nostra varius cursus semper.
+<br/><br/>
+Nunc dictumst fames curae viverra magna primis, ridiculus pretium vivamus montes vehicula urna facilisi, curabitur nibh euismod facilisis purus. Quam cubilia vitae parturient mauris feugiat magnis fermentum ad est, condimentum justo odio vivamus lobortis blandit nisl fringilla porttitor, donec netus purus posuere enim sollicitudin viverra suspendisse. Est fusce rutrum at parturient facilisi dignissim eget netus, egestas nisi senectus imperdiet suspendisse volutpat consequat euismod commodo, mauris luctus fringilla curabitur eros rhoncus orci. Convallis libero luctus cras auctor erat cursus laoreet commodo platea, integer dictumst tristique sed sociosqu risus eleifend id egestas, nisl aenean congue metus felis malesuada vivamus arcu.
+Lorem ipsum dolor sit amet consectetur adipiscing elit dictumst magna, vel aenean blandit etiam in urna vulputate lobortis, integer aptent luctus cras cubilia convallis ut justo. Accumsan laoreet vulputate metus cum sociis fames nisl placerat, pretium donec montes dui molestie hac leo, tortor lectus ut pellentesque nibh et habitant. At donec tristique natoque consequat class ornare scelerisque fusce luctus mi convallis, risus integer rutrum sociosqu senectus mattis torquent sem molestie augue, netus morbi velit montes ut auctor vivamus euismod egestas ullamcorper. Magnis donec magna penatibus scelerisque feugiat duis non torquent, dictumst cum class proin turpis inceptos mattis, ultricies posuere ullamcorper tristique ultrices diam mi.
+<br/><br/>
+Ultrices proin pretium odio mus viverra etiam, luctus diam in non hac mauris, tellus dis ullamcorper tempus malesuada. Elementum id aenean nisi consequat dui tristique condimentum vel commodo, cum magnis ridiculus nostra vulputate a curabitur mauris sagittis pellentesque, massa cubilia nibh interdum tellus enim metus eleifend. Dictum integer ullamcorper feugiat imperdiet ornare vestibulum venenatis elementum ante taciti lacinia, suscipit sem iaculis consequat ridiculus est blandit nullam condimentum egestas.
+<br/><br/>
+Egestas odio nisl eget penatibus metus sem netus interdum fusce massa aptent, ante faucibus arcu suspendisse erat proin duis urna fringilla varius ullamcorper, curae aliquet eros auctor imperdiet parturient nisi sed vivamus id. Magnis nibh velit tempor vel eros leo, lobortis proin senectus dictumst urna, ad aliquam tellus dapibus a. Blandit vivamus natoque nullam lectus commodo urna ac quam ultricies, erat hendrerit ante vestibulum est bibendum praesent nunc sociis, vel et tellus penatibus facilisis integer neque turpis.
+<br/><br/>
+Cubilia potenti primis maecenas ullamcorper convallis habitasse parturient dignissim diam, luctus sodales hac enim feugiat himenaeos pulvinar rhoncus, commodo morbi cum tellus augue torquent urna aptent. Risus condimentum commodo nisl aliquet posuere dictum viverra pellentesque magna vulputate sodales aliquam est vivamus, mollis iaculis placerat id praesent sociosqu sapien eget montes consequat sed nullam maecenas. Hac interdum viverra dapibus suscipit odio pharetra sed, sollicitudin euismod arcu penatibus est integer primis sapien, proin ligula congue non ullamcorper curabitur. Per dis etiam sodales nulla pellentesque auctor morbi blandit elementum aliquam, tempus dictumst sociosqu dictum vestibulum eros bibendum nam quis, platea ante mauris nec fringilla nostra varius cursus semper.
+<br/><br/>
+Nunc dictumst fames curae viverra magna primis, ridiculus pretium vivamus montes vehicula urna facilisi, curabitur nibh euismod facilisis purus. Quam cubilia vitae parturient mauris feugiat magnis fermentum ad est, condimentum justo odio vivamus lobortis blandit nisl fringilla porttitor, donec netus purus posuere enim sollicitudin viverra suspendisse. Est fusce rutrum at parturient facilisi dignissim eget netus, egestas nisi senectus imperdiet suspendisse volutpat consequat euismod commodo, mauris luctus fringilla curabitur eros rhoncus orci. Convallis libero luctus cras auctor erat cursus laoreet commodo platea, integer dictumst tristique sed sociosqu risus eleifend id egestas, nisl aenean congue metus felis malesuada vivamus arcu.
+Lorem ipsum dolor sit amet consectetur adipiscing elit dictumst magna, vel aenean blandit etiam in urna vulputate lobortis, integer aptent luctus cras cubilia convallis ut justo. Accumsan laoreet vulputate metus cum sociis fames nisl placerat, pretium donec montes dui molestie hac leo, tortor lectus ut pellentesque nibh et habitant. At donec tristique natoque consequat class ornare scelerisque fusce luctus mi convallis, risus integer rutrum sociosqu senectus mattis torquent sem molestie augue, netus morbi velit montes ut auctor vivamus euismod egestas ullamcorper. Magnis donec magna penatibus scelerisque feugiat duis non torquent, dictumst cum class proin turpis inceptos mattis, ultricies posuere ullamcorper tristique ultrices diam mi.
+<br/><br/>
+Ultrices proin pretium odio mus viverra etiam, luctus diam in non hac mauris, tellus dis ullamcorper tempus malesuada. Elementum id aenean nisi consequat dui tristique condimentum vel commodo, cum magnis ridiculus nostra vulputate a curabitur mauris sagittis pellentesque, massa cubilia nibh interdum tellus enim metus eleifend. Dictum integer ullamcorper feugiat imperdiet ornare vestibulum venenatis elementum ante taciti lacinia, suscipit sem iaculis consequat ridiculus est blandit nullam condimentum egestas.
+<br/><br/>
+Egestas odio nisl eget penatibus metus sem netus interdum fusce massa aptent, ante faucibus arcu suspendisse erat proin duis urna fringilla varius ullamcorper, curae aliquet eros auctor imperdiet parturient nisi sed vivamus id. Magnis nibh velit tempor vel eros leo, lobortis proin senectus dictumst urna, ad aliquam tellus dapibus a. Blandit vivamus natoque nullam lectus commodo urna ac quam ultricies, erat hendrerit ante vestibulum est bibendum praesent nunc sociis, vel et tellus penatibus facilisis integer neque turpis.
+<br/><br/>
+Cubilia potenti primis maecenas ullamcorper convallis habitasse parturient dignissim diam, luctus sodales hac enim feugiat himenaeos pulvinar rhoncus, commodo morbi cum tellus augue torquent urna aptent. Risus condimentum commodo nisl aliquet posuere dictum viverra pellentesque magna vulputate sodales aliquam est vivamus, mollis iaculis placerat id praesent sociosqu sapien eget montes consequat sed nullam maecenas. Hac interdum viverra dapibus suscipit odio pharetra sed, sollicitudin euismod arcu penatibus est integer primis sapien, proin ligula congue non ullamcorper curabitur. Per dis etiam sodales nulla pellentesque auctor morbi blandit elementum aliquam, tempus dictumst sociosqu dictum vestibulum eros bibendum nam quis, platea ante mauris nec fringilla nostra varius cursus semper.
+<br/><br/>
+Nunc dictumst fames curae viverra magna primis, ridiculus pretium vivamus montes vehicula urna facilisi, curabitur nibh euismod facilisis purus. Quam cubilia vitae parturient mauris feugiat magnis fermentum ad est, condimentum justo odio vivamus lobortis blandit nisl fringilla porttitor, donec netus purus posuere enim sollicitudin viverra suspendisse. Est fusce rutrum at parturient facilisi dignissim eget netus, egestas nisi senectus imperdiet suspendisse volutpat consequat euismod commodo, mauris luctus fringilla curabitur eros rhoncus orci. Convallis libero luctus cras auctor erat cursus laoreet commodo platea, integer dictumst tristique sed sociosqu risus eleifend id egestas, nisl aenean congue metus felis malesuada vivamus arcu.
+
+
+`
+
+const body = document.querySelector('body');
+body.append(texto);
+
+const progressBar = document.createElement('div');
+progressBar.setAttribute('class', 'progress-bar')
+body.append(progressBar);
+
+
+//funcion que haga el calculo
+const calcularPorcentajeAcroll = (event) => {
+    
+    const {scrollTop, scrollHeight, clientHeight} = event.target.documentElement;
+    //console.log({scrollTop, scrollHeight, clientHeight});
+    return (scrollTop/(scrollHeight-clientHeight)) * 100
+
+}
+
+//Streams
+const scroll$ = fromEvent(document, 'scroll');
+
+//que devuelva el porcentaje
+const progress$ = scroll$.pipe(
+    //map(event => calcularPorcentajeAcroll(event))
+    map(calcularPorcentajeAcroll),
+    //controlar informacion del codigo con tap
+    tap(console.log)
+);
+
+progress$.subscribe( porcentaje => {
+    progressBar.style.width = `${porcentaje}%`;
+})
+
+
+

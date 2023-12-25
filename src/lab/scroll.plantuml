@@ -1,0 +1,21 @@
+@startuml
+start
+
+:Escuchar eventos de desplazamiento en documento;
+note right: Utiliza fromEvent para crear un flujo de eventos de scroll (scroll$)
+
+:Procesar cada evento de desplazamiento;
+note right: Utiliza pipe y map para transformar eventos en porcentajes
+
+:Calcular porcentaje de desplazamiento;
+note right: Función calcularPorcentajeAcroll
+
+:Registrar porcentaje en consola;
+note right: Utiliza tap para log en consola
+
+:Actualizar barra de progreso;
+note right: Modifica el ancho del elemento progressBar
+
+stop
+
+@enduml
