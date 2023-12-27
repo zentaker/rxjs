@@ -1,8 +1,10 @@
-const url = 'http://api.github.com/users?per_page=5'
+import { of } from 'rxjs';
+import {AjaxError, ajax} from 'rxjs/ajax'
+import {catchError, map, pluck} from 'rxjs/operators'
 
-const fetchPromesa = fetch(url);
-//trabaja en funcion a promesas y no obserbables 
-//no se pueden cancelar solicitudes anteriores
+
+
+
 
 
 
