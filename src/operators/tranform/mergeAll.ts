@@ -39,7 +39,7 @@ input$.pipe(
     map(texto => ajax.getJSON(`https://api.github.com/search/users?q=${texto}`)),
 
     //se va a subribir y emitir dichos valores
-    mergeAll(),
+    //mergeAll(),
 
 ).subscribe( resp => {
     console.log(resp);

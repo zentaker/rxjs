@@ -1,23 +1,40 @@
-import { Observable, fromEvent, of } from 'rxjs';
+import { Observable, from, fromEvent, interval, of } from 'rxjs';
 import {AjaxError, ajax} from 'rxjs/ajax'
-import {catchError, debounceTime, map, mergeAll, pluck} from 'rxjs/operators'
+import {catchError, concatMap, debounceTime, map,  mergeMap,  switchMap, take, tap} from 'rxjs/operators'
 
 
 
-/* 
+//creando un formulario
+const form = document.createElement('form')
+const inpuEmail = document.createElement('input');
+const inpuPass = document.createElement('input');
+const submitBtn = document.createElement('button');
 
-source$ --|----|-----------------------|--->
-          |    \-----------(e)----------(f)-----|-->
-          \----(a)-(b)-(c)------(d)---|---->  
-          mergeAll()
-salida$ -------(a)-(b)-(c)--(c)---(d)---(f)-----|--->-
+//configuraciones
+inpuEmail.type = 'email';
+inpuEmail.placeholder = 'email';
+inpuEmail.value = 'eve.holt@reqreq.in'
+
+inpuPass.type = 'password';
+inpuPass.placeholder = 'password';
+inpuPass.value = '123456'
+
+submitBtn.innerHTML = 'Ingresar';
+
+form.append(inpuEmail,inpuPass, submitBtn);
+document.querySelector('body').append(form);
+
+//streams
+const submitForm$ = fromEvent(form, 'submit').pipe(
+    tap(ev=> ev.preventDefault()),
+    //obtener la informacion
+    
+).subscribe(token => console.log(token))
 
 
-unificar obserbales en una sola salida 
-transforma el flujo para observar directamente los resultados de las peticiones
-a.k.a > flatterning operator / operador de aplanamiento
 
-*/
+
+
 
 
 
