@@ -1,49 +1,38 @@
-import { Observable, from, fromEvent, interval, of } from 'rxjs';
+import { Observable, combineLatest, concat, forkJoin, from, fromEvent, interval, merge, of } from 'rxjs';
 import {AjaxError, ajax} from 'rxjs/ajax'
-import {catchError, concatMap, debounceTime, map,  mergeMap,  switchMap, take, tap} from 'rxjs/operators'
+import {catchError, delay, endWith, filter, map, mergeMap, reduce, startWith, take, tap} from 'rxjs/operators'
 
 
+/**
+ * Ejercicio: Realizar que los dos observables finales, 
+ * emitan exactamente el mismo valor
+ * 
+ * Tip: Hot Observable? subjects?
+ */
 
-//creando un formulario
-const form = document.createElement('form')
-const inpuEmail = document.createElement('input');
-const inpuPass = document.createElement('input');
-const submitBtn = document.createElement('button');
+(() =>{
 
-//configuraciones
-inpuEmail.type = 'email';
-inpuEmail.placeholder = 'email';
-inpuEmail.value = 'eve.holt@reqreq.in'
-
-inpuPass.type = 'password';
-inpuPass.placeholder = 'password';
-inpuPass.value = '123456'
-
-submitBtn.innerHTML = 'Ingresar';
-
-form.append(inpuEmail,inpuPass, submitBtn);
-document.querySelector('body').append(form);
-
-//streams
-const submitForm$ = fromEvent(form, 'submit').pipe(
-    tap(ev=> ev.preventDefault()),
-    //obtener la informacion
+    // == NO TOCAR este bloque ====================
+    const reloj$ = interval(1000).pipe(
+      take(5),
+      map( val => Math.round(Math.random() * 100) )
+    );
+    // No tocar la creación del observable
+    // ============================================
+  
+      
     
-).subscribe(token => console.log(token))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    // Estos dos observables deben de emitir exactamente los mismos valores
+    reloj$.subscribe( val => console.log('obs1', val) );
+    reloj$.subscribe( val => console.log('obs2', val) );
+  
+  
+  
+  
+  
+  })();
+  
 
 
 
